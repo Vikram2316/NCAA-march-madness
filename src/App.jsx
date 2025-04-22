@@ -1,42 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import TeamCard from './TeamCard';
-import StateTable from './StateTable';
+import React, { useEffect, useState } from 'react'; // Importing necessary modules
+import TeamCard from './components/TeamCard'; // Importing TeamCard component
+import StateTable from './components/StatsTable'; // Importing StateTable component
 
 const App = () => {
-  const [teams, setTeams] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [teams, setTeams] = useState([]); // Initializing state for teams
+  const [loading, setLoading] = useState(true); // Initializing state for loading
 
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const response = await fetch('https://ncaa-api.henrygd.me/rankings/football/fbs/associated-press');
-        const data = await response.json();
-        setTeams(data.rankings || []);
+        const response = await fetch('https://ncaa-api.henrygd.me/rankings/football/fbs/associated-press'); // Fetching data from API
+        const data = await response.json(); // Parsing response data
+        setTeams(data.rankings || []); // Updating teams state with fetched data
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching data:', error); // Handling error if data fetching fails
       } finally {
-        setLoading(false);
+        setLoading(false); // Setting loading state to false
       }
     };
 
-    fetchTeams();
+    fetchTeams(); // Calling fetchTeams function
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>; // Displaying loading message if data is still loading
   }
 
   return (
     <div>
-      <h1>NCAA March Madness Stats</h1>
+      <h1>NCAA March Madness Stats</h1> // Heading for the app
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
         {teams.map((team, index) => (
-          <TeamCard key={index} team={team} />
+          <TeamCard key={index} team={team} /> // Rendering TeamCard component for each team
         ))}
       </div>
-      <StateTable teams={teams} />
+      <StateTable teams={teams} /> // Rendering StateTable component with teams data
     </div>
   );
 };
 
-export default App;
+export default App; // Exporting App component
