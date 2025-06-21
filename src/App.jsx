@@ -9,8 +9,10 @@ const App = () => {
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const response = await fetch('https://ncaa-api.henrygd.me/rankings/football/fbs/associated-press'); // Fetching data from API
+        // Using basketball API instead of football for March Madness
+        const response = await fetch('https://ncaa-api.henrygd.me/rankings/basketball/mens/associated-press');
         const data = await response.json(); // Parsing response data
+        console.log('API Response:', data); // Debug log to see the data structure
         setTeams(data.rankings || []); // Updating teams state with fetched data
       } catch (error) {
         console.error('Error fetching data:', error); // Handling error if data fetching fails
